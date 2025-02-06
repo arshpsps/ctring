@@ -46,7 +46,33 @@ void prepend(str *string, char *s) {
     string->len += strlen(s);
     free(tmp);
 }
-void insert(str *str, int pos);
+void insert(str *str, char *s, int pos) {
+    if (pos == 0) {
+        return append(str, s);
+    } else if (pos == str->len) {
+        return prepend(str, s);
+    }
+    if ((strlen(s) + str->len) >= str->capacity) {
+        char *re = realloc(str->literal,
+                           (strlen(s) + str->len + 1) * sizeof(char) * 2);
+        if (!re) {
+            exit(1);
+        }
+        str->literal = re;
+        str->capacity = (strlen(s) + str->len + 1) * sizeof(char) * 2;
+    }
+    char *tmp = malloc((str->len - pos + 1) * sizeof(char));
+    int j = 0;
+    for (int i = pos; i < str->len + 1; i++) {
+        tmp[j] = str->literal[i];
+        j++;
+    }
+    str->literal[pos] = '\0';
+    strcat(str->literal, s);
+    strcat(str->literal, tmp);
+    free(tmp);
+    str->len += strlen(s);
+}
 
 int main() {
     str *s = Str("Hihhhhhhhh");
@@ -58,9 +84,15 @@ int main() {
     prepend(s, "Oh ");
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
-    prepend(s, "1234568888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888887");
+    prepend(s, "123456888888888888888888888888888888888888888888888888888888888"
+               "888888888888888888888888888888888888888888888888888888888888888"
+               "8888888888888888888888887");
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
+    insert(s, "Oh", 2);
+    printf("%s\n", s->literal);
+    printf("%zu/%zu\n", s->len, s->capacity);
+
     free(s->literal);
     free(s);
 
