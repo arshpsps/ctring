@@ -14,5 +14,6 @@ char *toCString(str *str);
 void append(str *string, char *s);
 void prepend(str *string, char *s);
 void insert(str *str, char *s, int pos);
+int removeFromStr(str *str, size_t pos, size_t size);
 
 #endif

@@ -6,7 +6,7 @@ int main() {
     str *s = Str("Hihhhhhhhh");
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
-    append(s, " hjjjjjiijjjjjjjjjjjjjjjjjjiiiiiiiiiiiiiiiiiiiiiiiiiii");
+    append(s, " hjjjjjiijjjjjjjjjjjjjjjjjjiiiiiiiiiiiiiiiiiiiiiiiiiii9");
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
     prepend(s, "Oh ");
@@ -18,6 +18,15 @@ int main() {
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
     insert(s, "Oh", 2);
+    printf("%s\n", s->literal);
+    printf("%zu/%zu\n", s->len, s->capacity);
+    removeFromStr(s, 2, 200);
+    printf("%s\n", s->literal);
+    printf("%zu/%zu\n", s->len, s->capacity);
+    removeFromStr(s, 0, 1);
+    printf("%s\n", s->literal);
+    printf("%zu/%zu\n", s->len, s->capacity);
+    removeFromStr(s, 19, 1);
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
 

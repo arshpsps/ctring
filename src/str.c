@@ -26,6 +26,7 @@ void append(str *string, char *s) {
     strcat(string->literal, s);
     string->len += strlen(s);
 }
+
 void prepend(str *string, char *s) {
     char *tmp = malloc((string->len + 1) * sizeof(char));
     strcpy(tmp, string->literal);
@@ -39,6 +40,7 @@ void prepend(str *string, char *s) {
     string->len += strlen(s);
     free(tmp);
 }
+
 void insert(str *str, char *s, int pos) {
     if (pos == 0) {
         return append(str, s);
@@ -49,7 +51,7 @@ void insert(str *str, char *s, int pos) {
         char *re = realloc(str->literal,
                            (strlen(s) + str->len + 1) * sizeof(char) * 2);
         if (!re) {
-            exit(1);
+            exit(-1);
         }
         str->literal = re;
         str->capacity = (strlen(s) + str->len + 1) * sizeof(char) * 2;
@@ -65,4 +67,30 @@ void insert(str *str, char *s, int pos) {
     strcat(str->literal, tmp);
     free(tmp);
     str->len += strlen(s);
+}
+
+int removeFromStr(str *str, size_t pos, size_t size) {
+    if (pos < 0 || pos >= str->len || pos + size > str->capacity) {
+        exit(-1);
+    };
+    int prev_len = strlen(str->literal);
+
+    int i = pos;
+    for (int j = pos + size; str->literal[j] != '\0'; j++) {
+        str->literal[i] = str->literal[j];
+        i++;
+    }
+    str->literal[i] = '\0';
+    str->len = strlen(str->literal);
+
+    if (str->len < str->capacity / 2) {
+        str->capacity = (str->len + 1) * 1.5 * sizeof(char);
+        char *tmp = realloc(str->literal, str->capacity);
+        if (!tmp) {
+            exit(-1);
+        }
+        str->literal = tmp;
+    }
+
+    return prev_len - str->len;
 }
