@@ -2,8 +2,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+int isEmpty(char *s) {
+    if (strlen(s) <= 0) {
+        return 1;
+    }
+    return 0;
+}
+
 str *Str(char *string) {
     str *s = malloc(sizeof(str));
+    if (isEmpty(string)) {
+        s->capacity = 0;
+        s->len = 0;
+    }
 
     s->capacity = 2 * strlen(string) * sizeof(char);
     s->literal = malloc(s->capacity);
@@ -16,6 +27,9 @@ str *Str(char *string) {
 char *toCString(str *str) { return str->literal; }
 
 void append(str *string, char *s) {
+    if (isEmpty(s)) {
+        return;
+    }
     if (strlen(s) + string->len >= string->capacity) {
         string->capacity = (strlen(s) * sizeof(char)) + string->capacity;
         char *tmp = string->literal;
@@ -28,6 +42,9 @@ void append(str *string, char *s) {
 }
 
 void prepend(str *string, char *s) {
+    if (isEmpty(s)) {
+        return;
+    }
     char *tmp = malloc((string->len + 1) * sizeof(char));
     strcpy(tmp, string->literal);
     if (strlen(s) + string->len >= string->capacity) {
@@ -42,6 +59,9 @@ void prepend(str *string, char *s) {
 }
 
 void insert(str *str, char *s, int pos) {
+    if (isEmpty(s)) {
+        return;
+    }
     if (pos == 0) {
         return append(str, s);
     } else if (pos == str->len) {
