@@ -6,7 +6,7 @@ memchk: run | builds
 	@ valgrind --leak-check=yes ./builds/out
 
 run: ./src/main.c | builds
-	@ gcc -o ./builds/out ./src/main.c $(memvar)
+	@ gcc -o ./builds/out ./src/main.c ./src/str.c $(memvar)
 
 builds:
 	mkdir -p $@
