@@ -10,7 +10,7 @@ typedef struct {
 } str;
 
 str *Str(char *string);
-char *toCString(str *str);
+char *toCString(str *str); // FIXME: strcpy and return the pointer to new allocd space
 void append(str *string, char *s);
 void prepend(str *string, char *s);
 void insert(str *str, char *s, int pos);
