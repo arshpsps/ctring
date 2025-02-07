@@ -3,13 +3,16 @@
 #include <stdlib.h>
 
 int main() {
-    str *s = Str("Hihhhhhhhh");
+    str *s = Str("");
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
-    append(s, " hjjjjjiijjjjjjjjjjjjjjjjjjiiiiiiiiiiiiiiiiiiiiiiiiiii9");
+    append(s, "ih");
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
-    prepend(s, "Oh ");
+    append(s, "");
+    printf("%s\n", s->literal);
+    printf("%zu/%zu\n", s->len, s->capacity);
+    prepend(s, "");
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
     prepend(s, "123456888888888888888888888888888888888888888888888888888888888"

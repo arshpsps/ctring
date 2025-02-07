@@ -1,12 +1,21 @@
 #include "./str.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#define ANSI_COLOR_RED "\x1b[31m"
+#define ANSI_COLOR_RESET "\x1b[0m"
 
 int isEmpty(char *s) {
     if (strlen(s) <= 0) {
         return 1;
     }
     return 0;
+}
+
+void freeStr(str *str) {
+    free(str->literal);
+    free(str);
 }
 
 str *Str(char *string) {
@@ -31,7 +40,7 @@ void append(str *string, char *s) {
         return;
     }
     if (strlen(s) + string->len >= string->capacity) {
-        string->capacity = (strlen(s) * sizeof(char)) + string->capacity;
+        string->capacity = ((strlen(s) * sizeof(char)) + string->capacity) * 2;
         char *tmp = string->literal;
         string->literal = malloc(string->capacity);
         strcpy(string->literal, tmp);
@@ -48,7 +57,7 @@ void prepend(str *string, char *s) {
     char *tmp = malloc((string->len + 1) * sizeof(char));
     strcpy(tmp, string->literal);
     if (strlen(s) + string->len >= string->capacity) {
-        string->capacity = (strlen(s) * sizeof(char)) + string->capacity;
+        string->capacity = ((strlen(s) * sizeof(char)) + string->capacity) * 2;
         free(string->literal);
         string->literal = malloc(string->capacity);
     }
@@ -71,6 +80,7 @@ void insert(str *str, char *s, int pos) {
         char *re = realloc(str->literal,
                            (strlen(s) + str->len + 1) * sizeof(char) * 2);
         if (!re) {
+            freeStr(str);
             exit(-1);
         }
         str->literal = re;
@@ -91,6 +101,10 @@ void insert(str *str, char *s, int pos) {
 
 int removeFromStr(str *str, size_t pos, size_t size) {
     if (pos < 0 || pos >= str->len || pos + size > str->capacity) {
+        freeStr(str);
+        fprintf(stderr, ANSI_COLOR_RED
+                "Invalid pos/size or str empty.\nPoint of error: "
+                "removeFromStr()\nTerminating!" ANSI_COLOR_RESET "\n");
         exit(-1);
     };
     int prev_len = strlen(str->literal);
@@ -107,6 +121,7 @@ int removeFromStr(str *str, size_t pos, size_t size) {
         str->capacity = (str->len + 1) * 1.5 * sizeof(char);
         char *tmp = realloc(str->literal, str->capacity);
         if (!tmp) {
+            freeStr(str);
             exit(-1);
         }
         str->literal = tmp;
