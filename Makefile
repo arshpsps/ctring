@@ -5,13 +5,21 @@ memchk: memvar = -g -O0
 memchk: run | builds
 	@ valgrind --leak-check=yes ./builds/out
 
-run: ./src/main.c ./src/str.c | builds
-	@ gcc -Wall -o ./builds/out ./src/main.c ./src/str.c $(memvar)
+run: ./src/main.c ./src/ctring.c | builds
+	@ gcc -Wall -o ./builds/out ./src/main.c ./src/ctring.c $(memvar)
 
-lib: ./src/str.c ./src/str.h | builds
-	@ gcc -Wall -c -o ./builds/str.o ./src/str.c
-	@ ar rcs ./builds/str.a ./builds/str.o
-	@ echo ".a lib placed in builds/"
+liba: ./src/ctring.c ./src/ctring.h | builds
+	@ gcc -Wall -c -o ./builds/ctring.o ./src/ctring.c
+	@ ar rcs ./builds/ctring.a ./builds/ctring.o
+	@ echo ".a static lib placed in builds/"
+
+libso: ./src/ctring.c ./src/ctring.h | builds
+	@ gcc -Wall -c -fPIC -o ./builds/ctring.o ./src/ctring.c
+	@ gcc -shared -o ./builds/ctring.so ./builds/ctring.o
+	@ echo ".so shared lib placed in builds/"
+
+clean: | builds
+	rm -rdf ./builds/*
 
 builds:
 	mkdir -p $@

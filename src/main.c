@@ -1,12 +1,12 @@
-#include "./str.h"
+#include "./ctring.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 int main() {
-    str *s = Str(NULL);
+    Ctring *s = ctring(NULL);
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
-    removeFromStr(s, 0, 1);
+    removeFromCtring(s, 0, 1);
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
     insert(s, NULL, 2);
@@ -35,13 +35,13 @@ int main() {
     insert(s, "Oh", 2);
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
-    removeFromStr(s, 2, 200);
+    removeFromCtring(s, 2, 200);
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
-    removeFromStr(s, 0, 1);
+    removeFromCtring(s, 0, 1);
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
-    removeFromStr(s, 19, 1);
+    removeFromCtring(s, 19, 1);
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
 
