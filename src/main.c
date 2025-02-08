@@ -3,10 +3,22 @@
 #include <stdlib.h>
 
 int main() {
-    str *s = Str("");
+    str *s = Str(NULL);
+    printf("%s\n", s->literal);
+    printf("%zu/%zu\n", s->len, s->capacity);
+    removeFromStr(s, 0, 1);
+    printf("%s\n", s->literal);
+    printf("%zu/%zu\n", s->len, s->capacity);
+    insert(s, NULL, 2);
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
     append(s, "ih");
+    printf("%s\n", s->literal);
+    printf("%zu/%zu\n", s->len, s->capacity);
+    prepend(s, NULL);
+    printf("%s\n", s->literal);
+    printf("%zu/%zu\n", s->len, s->capacity);
+    append(s, NULL);
     printf("%s\n", s->literal);
     printf("%zu/%zu\n", s->len, s->capacity);
     append(s, "");

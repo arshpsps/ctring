@@ -7,7 +7,7 @@
 #define ANSI_COLOR_RESET "\x1b[0m"
 
 int isEmpty(char *s) {
-    if (strlen(s) <= 0) {
+    if (s == NULL || strlen(s) <= 0) {
         return 1;
     }
     return 0;
@@ -21,8 +21,10 @@ void freeStr(str *str) {
 str *Str(char *string) {
     str *s = malloc(sizeof(str));
     if (isEmpty(string)) {
-        s->capacity = 0;
+        s->capacity = 1 * sizeof(char);
+        s->literal = malloc(s->capacity);
         s->len = 0;
+        return s;
     }
 
     s->capacity = 2 * strlen(string) * sizeof(char);
@@ -43,7 +45,9 @@ void append(str *string, char *s) {
         string->capacity = ((strlen(s) * sizeof(char)) + string->capacity) * 2;
         char *tmp = string->literal;
         string->literal = malloc(string->capacity);
-        strcpy(string->literal, tmp);
+        if (!isEmpty(tmp)) {
+            strcpy(string->literal, tmp);
+        }
         free(tmp);
     }
     strcat(string->literal, s);
@@ -53,6 +57,9 @@ void append(str *string, char *s) {
 void prepend(str *string, char *s) {
     if (isEmpty(s)) {
         return;
+    }
+    if (isEmpty(string->literal)) {
+        return append(string, s);
     }
     char *tmp = malloc((string->len + 1) * sizeof(char));
     strcpy(tmp, string->literal);
@@ -68,6 +75,13 @@ void prepend(str *string, char *s) {
 }
 
 void insert(str *str, char *s, int pos) {
+    if (pos > str->len) {
+        freeStr(str);
+        fprintf(stderr,
+                ANSI_COLOR_RED "Invalid pos.\nPoint of error: "
+                               "insert()\nTerminating!" ANSI_COLOR_RESET "\n");
+        exit(-1);
+    }
     if (isEmpty(s)) {
         return;
     }
