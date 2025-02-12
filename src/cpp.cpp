@@ -2,8 +2,9 @@
 #include <iostream>
 
 int main() {
-    Ctring *c = ctring("Hello bkl");
+    char *s = "hello bkl";
+    Ctring *c = ctring(s);
 
-    char uwu = c[2];
+    char uwu = (*c)[0];
     std::cout << uwu << "\n";
 }

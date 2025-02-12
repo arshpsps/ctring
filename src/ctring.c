@@ -1,6 +1,5 @@
 #include "./ctring.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #define ANSI_COLOR_RED "\x1b[31m"
@@ -152,7 +151,7 @@ char getAt(Ctring *ctring, size_t pos) {
         if (ctring->len + pos < 0) {
             exit(-1);
         }
-        return ctring->literal[ctring->len - pos];
+        return ctring->literal[ctring->len + pos];
     }
     return ctring->literal[pos];
 }
