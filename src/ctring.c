@@ -143,3 +143,16 @@ int removeFromCtring(Ctring *ctring, size_t pos, size_t size) {
 
     return prev_len - ctring->len;
 }
+
+char getAt(Ctring *ctring, size_t pos) {
+    if (ctring->len <= pos || !ctring->literal) {
+        exit(-1);
+    }
+    if (pos < 0) {
+        if (ctring->len + pos < 0) {
+            exit(-1);
+        }
+        return ctring->literal[ctring->len - pos];
+    }
+    return ctring->literal[pos];
+}

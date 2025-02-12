@@ -8,6 +8,10 @@ memchk: run | builds
 run: ./src/main.c ./src/ctring.c | builds
 	@ gcc -Wall -o ./builds/out ./src/main.c ./src/ctring.c $(memvar)
 
+cpp: ./src/ctring.c ./src/ctring.h ./src/cpp.cpp | builds
+	@ g++ -o ./builds/cppout ./src/cpp.cpp -lbuilds/ctring.so
+	@ ./builds/cppout
+
 liba: ./src/ctring.c ./src/ctring.h | builds
 	@ gcc -Wall -c -o ./builds/ctring.o ./src/ctring.c
 	@ ar rcs ./builds/ctring.a ./builds/ctring.o
