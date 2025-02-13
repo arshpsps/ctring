@@ -1,5 +1,4 @@
 #include "./ctring.h"
-#include <stdio.h>
 #include <string.h>
 
 #define ANSI_COLOR_RED "\x1b[31m"
@@ -143,15 +142,15 @@ int removeFromCtring(Ctring *ctring, size_t pos, size_t size) {
     return prev_len - ctring->len;
 }
 
-char getAt(Ctring *ctring, size_t pos) {
-    if (ctring->len <= pos || !ctring->literal) {
-        exit(-1);
-    }
+char getAt(Ctring *ctring, int pos) {
     if (pos < 0) {
-        if (ctring->len + pos < 0) {
+        if (ctring->len < pos*-1) {
             exit(-1);
         }
         return ctring->literal[ctring->len + pos];
+    }
+    if (ctring->len <= pos) {
+        exit(-1);
     }
     return ctring->literal[pos];
 }

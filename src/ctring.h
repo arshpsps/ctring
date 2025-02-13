@@ -2,6 +2,7 @@
 #define STR_H_
 
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #ifdef __cplusplus
@@ -17,14 +18,16 @@ typedef struct Ctring {
 
     char operator[](int pos) {
 
-        if (this->len <= pos || !this->literal) {
-            exit(-1);
-        }
         if (pos < 0) {
-            if (this->len + pos < 0) {
+            if (this->len < (pos*-1)) {
+                printf("exit 2, pos: %d", pos);
                 exit(-1);
             }
             return this->literal[this->len + pos];
+        }
+        if (this->len <= pos) {
+            printf("exit 1, pos: %d, len: %zu", pos, this->len);
+            exit(-1);
         }
         return this->literal[pos];
     }
