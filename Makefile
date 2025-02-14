@@ -12,6 +12,9 @@ cpp: ./src/ctring.c ./src/ctring.h ./src/cpp.cpp | builds
 	@ g++ -o ./builds/cppout ./src/cpp.cpp -Lbuilds -lctring
 	@ LD_LIBRARY_PATH=./builds ./builds/cppout
 
+release: liba libso ./src/ctring.h | builds
+	@ tar -czvf ./builds/ctring-$(v)-linux-x86_64.tar.gz ./src/ctring.h ./builds/libctring.a ./builds/libctring.so
+
 liba: ./src/ctring.c ./src/ctring.h | builds
 	@ gcc -Wall -c -o ./builds/ctring.o ./src/ctring.c
 	@ ar rcs ./builds/libctring.a ./builds/ctring.o

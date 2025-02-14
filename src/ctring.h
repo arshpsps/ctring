@@ -19,7 +19,7 @@ typedef struct Ctring {
     char operator[](int pos) {
 
         if (pos < 0) {
-            if (this->len < (pos*-1)) {
+            if (this->len < (pos * -1)) {
                 printf("exit 2, pos: %d", pos);
                 exit(-1);
             }
@@ -35,6 +35,7 @@ typedef struct Ctring {
 #endif
 } Ctring;
 
+void freeCtring(Ctring *ctring);
 Ctring *ctring(char *string);
 char *toCString(
     Ctring *ctring); // FIXME: strcpy and return the pointer to new allocd space

@@ -11,7 +11,7 @@ int isEmpty(char *s) {
     return 0;
 }
 
-void freeStr(Ctring *ctring) {
+void freeCtring(Ctring *ctring) {
     free(ctring->literal);
     free(ctring);
 }
@@ -74,7 +74,7 @@ void prepend(Ctring *ctring, char *s) {
 
 void insert(Ctring *ctring, char *s, int pos) {
     if (pos > ctring->len) {
-        freeStr(ctring);
+        freeCtring(ctring);
         fprintf(stderr,
                 ANSI_COLOR_RED "Invalid pos.\nPoint of error: "
                                "insert()\nTerminating!" ANSI_COLOR_RESET "\n");
@@ -92,7 +92,7 @@ void insert(Ctring *ctring, char *s, int pos) {
         char *re = realloc(ctring->literal,
                            (strlen(s) + ctring->len + 1) * sizeof(char) * 2);
         if (!re) {
-            freeStr(ctring);
+            freeCtring(ctring);
             exit(-1);
         }
         ctring->literal = re;
@@ -113,7 +113,7 @@ void insert(Ctring *ctring, char *s, int pos) {
 
 int removeFromCtring(Ctring *ctring, size_t pos, size_t size) {
     if (pos < 0 || pos >= ctring->len || pos + size > ctring->capacity) {
-        freeStr(ctring);
+        freeCtring(ctring);
         fprintf(stderr, ANSI_COLOR_RED
                 "Invalid pos/size or str empty.\nPoint of error: "
                 "removeFromStr()\nTerminating!" ANSI_COLOR_RESET "\n");
@@ -133,7 +133,7 @@ int removeFromCtring(Ctring *ctring, size_t pos, size_t size) {
         ctring->capacity = (ctring->len + 1) * 1.5 * sizeof(char);
         char *tmp = realloc(ctring->literal, ctring->capacity);
         if (!tmp) {
-            freeStr(ctring);
+            freeCtring(ctring);
             exit(-1);
         }
         ctring->literal = tmp;
